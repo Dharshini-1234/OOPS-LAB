@@ -4,6 +4,7 @@
 package com.mycompany.javaapplication3;
 
 import java.util.Scanner;
+import static javax.management.Query.and;
 
 public class Javaapplication3 {
 
@@ -30,11 +31,15 @@ public class Javaapplication3 {
         int attendanceMark;
         if (attendancePercentage >= 90) {
             attendanceMark = 5;
-        } else if (attendancePercentage >= 80) {
+        } 
+        else if (attendancePercentage >= 80&& attendancePercentage<90)
+        {
             attendanceMark = 4;
-        } else if (attendancePercentage >= 75) {
+        } 
+        else if (attendancePercentage >= 75&& attendancePercentage<80) {
             attendanceMark = 3;
-        } else {
+        } 
+        else {
             attendanceMark = 0;
         }
 
@@ -45,7 +50,6 @@ public class Javaapplication3 {
         System.out.println("Attendance Mark: " + attendanceMark);
     }
 }
-
 
 //2.book details
 package com.mycompany.javaapplication3;
