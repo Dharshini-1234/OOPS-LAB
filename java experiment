@@ -1,0 +1,167 @@
+package employee_data;
+class Employee {
+    String emp_name;
+    int emp_id;
+    String category; // "male" or "female"
+    String address;
+    String mail_id;
+    String mobile_no;
+    double basicPay;
+
+    Employee(String emp_name, int emp_id, String category, String address, String mail_id, String mobile_no, double basicPay) {
+        this.emp_name = emp_name;
+        this.emp_id = emp_id;
+        this.category = category;
+        this.address = address;
+        this.mail_id = mail_id;
+        this.mobile_no = mobile_no;
+        this.basicPay = basicPay;
+    }
+
+    double calculateDA() {
+        return 0.97 * basicPay;
+    }
+
+    double calculateHRA() {
+        return 0.10 * basicPay;
+    }
+
+    double calculatePF() {
+        return 0.12 * basicPay;
+    }
+
+    double calculateStaffClubFund() {
+        return 0.001 * basicPay;
+    }
+
+    double calculateGrossSalary() {
+        return calculateDA() + calculateHRA() + calculatePF() + calculateStaffClubFund() + basicPay;
+    }
+
+    double calculateIncomeTax() {
+        double grossSalary = calculateGrossSalary();
+        if (category.equalsIgnoreCase("male")) {
+            if (grossSalary <= 190000) {
+                return 0;
+            } else if (grossSalary <= 200000) {
+                return 0.10 * (grossSalary - 190000);
+            } else if (grossSalary <= 500000) {
+                return 0.20 * (grossSalary - 200000);
+            } else {
+                return 0.25 * (grossSalary - 500000);
+            }
+        } else if (category.equalsIgnoreCase("female")) {
+            if (grossSalary <= 190000) {
+                return 0;
+            } else if (grossSalary <= 500000) {
+                return 0.10 * (grossSalary - 190000);
+            } else {
+                return 0.20 * (grossSalary - 500000);
+            }
+        }
+        return 0;
+    }
+
+    double calculateNetSalary() {
+        return calculateGrossSalary() - calculateIncomeTax();
+    }
+
+    void generatePaySlip() {
+        System.out.println("Employee Name: " + emp_name);
+        System.out.println("Employee ID: " + emp_id);
+        System.out.println("Basic Pay: " + basicPay);
+        System.out.println("Gross Salary: " + calculateGrossSalary());
+        System.out.println("Net Salary: " + calculateNetSalary());
+        System.out.println("Income Tax: " + calculateIncomeTax());
+    }
+}
+
+public class EmployeeTest {
+    public static void main(String[] args) {
+        Employee employee1 = new Employee("John", 1, "male", "123 Main St", "john@example.com", "1234567890", 300000);
+        employee1.generatePaySlip();
+    }
+}
+//package creation
+package pack1;
+
+public class MathOperations {
+    public int add(int a, int b) {
+        return a + b;
+    }
+    
+    public int subtract(int a, int b) {
+        return a - b;
+    }
+}
+
+package pack2;
+
+public class StringOperations {
+    public String concatenate(String str1, String str2) {
+        return str1 + str2;
+    }
+    
+    public String reverse(String str) {
+        StringBuilder reversed = new StringBuilder(str);
+        return reversed.reverse().toString();
+    }
+}
+
+package pack3;
+
+public class Calculator {
+    public int multiply(int a, int b) {
+        return a * b;
+    }
+    
+    public String divide(int a, int b) {
+        if (b == 0) {
+            return "Cannot divide by zero!";
+        } else {
+            return String.valueOf(a / b);
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        MathOperations math = new MathOperations();
+        int sum = math.add(5, 3);
+        int difference = math.subtract(10, 4);
+        System.out.println("Sum: " + sum);
+        System.out.println("Difference: " + difference);
+        
+        StringOperations string = new StringOperations();
+        String concatenated = string.concatenate("Hello", "World");
+        String reversed = string.reverse("Java");
+        System.out.println("Concatenated: " + concatenated);
+        System.out.println("Reversed: " + reversed);
+        
+        Calculator calc = new Calculator();
+        int product = calc.multiply(6, 7);
+        String quotient = calc.divide(10, 2);
+        System.out.println("Product: " + product);
+        System.out.println("Quotient: " + quotient);
+    }
+}
+//protected property accessed from subclass
+class ParentClass {
+    protected String protectedProperty = "This is a protected property";
+    String defaultProperty = "This is a default property";
+}
+class ChildClass extends ParentClass {
+    public void accessProperties() {
+        // Access the protected property (allowed)
+        System.out.println(protectedProperty);
+        // Access the default property (allowed, as they are in the same package)
+        System.out.println(defaultProperty);
+        
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        ChildClass child = new ChildClass();
+        child.accessProperties();
+    }
+}
