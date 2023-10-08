@@ -1,0 +1,92 @@
+//1.DistanceFromAverageWithExceptionHandling
+package com.mycompany.distancefromaveragewithexceptionhandling1;
+      import java.util.Scanner;
+public class DistanceFromAverageWithExceptionHandling1 {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        double[] values;
+        int size;
+         try {
+            System.out.print("Enter the array size (up to 20): ");
+            size = input.nextInt();
+            if (size <= 0 || size > 20) {
+                System.out.println("Array size must be between 1 and 20.");
+                return;
+            }
+           values = new double[size];
+            for (int i = 0; i < size; i++) {
+                System.out.print("Enter value " + (i + 1) + ": ");
+                values[i] = input.nextDouble();
+            }
+            double sum = 0;
+            for (double value : values) {
+                sum += value;
+            }
+            double average = sum / size;
+            System.out.println("\nEntered values and their distances from the average:");
+            for (int i = 0; i < size; i++) {
+                System.out.println("Value " + (i + 1) + ": " + values[i] + " (Distance from Average: " + Math.abs(values[i] - average) + ")");
+            }
+        } catch (java.util.InputMismatchException e) {
+            System.out.println("Invalid input. Please enter numeric values.");
+        } catch (NegativeArraySizeException e) {
+            System.out.println("Array size cannot be negative.");
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid array size. Please enter a numeric value for the size.");
+        } finally {
+            input.close();
+        }
+    }
+}
+//2. ExceptionHandling
+package com.mycompany.mavenproject17;
+import java.util.Scanner;
+public class Mavenproject17 {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Handling Arithmetic Exception
+        try {
+            int numerator = 10;
+            System.out.print("Enter a denominator: ");
+            int denominator = scanner.nextInt();
+            int result = numerator / denominator;
+            System.out.println("Result of division: " + result);
+        } catch (ArithmeticException e) {
+            System.out.println("ArithmeticException: Division by zero is not allowed.");
+        }
+        try {
+            int[] numbers = {1, 2, 3};
+            System.out.print("Enter an index: ");
+            int index = scanner.nextInt();
+            int value = numbers[index];
+            System.out.println("Value at index " + index + ": " + value);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("ArrayIndexOutOfBoundsException: Invalid index.");
+        }
+
+        // Handling NumberFormatException
+        try {
+            System.out.print("Enter a number as a string: ");
+            String numberStr = scanner.next();
+            int number = Integer.parseInt(numberStr);
+            System.out.println("Parsed number: " + number);
+        } catch (NumberFormatException e) {
+            System.out.println("NumberFormatException: Invalid number format.");
+        }
+
+        // Handling StringIndexOutOfBoundsException
+        try {
+            System.out.print("Enter a string: ");
+            String input = scanner.next();
+            System.out.print("Enter an index: ");
+            int index = scanner.nextInt();
+            char charAtIndex = input.charAt(index);
+            System.out.println("Character at index " + index + ": " + charAtIndex);
+        } catch (StringIndexOutOfBoundsException e) {
+            System.out.println("StringIndexOutOfBoundsException: Invalid index.");
+        }
+
+        scanner.close();
+    }
+}
