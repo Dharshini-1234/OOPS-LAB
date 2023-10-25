@@ -1,0 +1,113 @@
+//1. write a program for test thread many.java that takes the positive integer n from command line
+package com.mycompany.testthreadmany;
+public class TestThreadMany {
+    public static void main(String[] args) {
+        if (args.length != 1) {
+            System.out.println("please provide positive integer as a command line argument");
+            return;
+        }
+
+        int n = Integer.parseInt(args[0]);
+
+        for (int i = 1; i <= n; i++) {
+            Thread thread = new Thread(new MyRunnable(i));
+            thread.start();
+        }
+    }
+
+    static class MyRunnable implements Runnable {
+        private final int threadNumber;
+
+        MyRunnable(int threadNumber) {
+            this.threadNumber = threadNumber;
+        }
+
+        @Override
+        public void run() {
+            System.out.println("Hello, I am Thread #" + threadNumber);
+        }
+    }
+}
+
+//2. uses three thread to print the numbers from 1 to 100
+package com.mycompany.javaapplication15;
+
+
+public class JavaApplication15 {
+
+   
+    public static void main(String[] args) {
+        // TODO code application logic here
+        sequence obj=new sequence();
+       
+        mythread1 t1=new mythread1(obj);
+        mythread2 t2=new mythread2(obj);
+        mythread3 t3=new mythread3(obj);
+       
+        t1.start();
+        t2.start();
+        t3.start();
+         }
+  }
+class sequence
+{
+       synchronized void printsequence(int m,int n)
+      {
+       for(int i=m;i<n;i++)
+       {
+                System.out.println(Thread.currentThread().getName()+":"+i);
+           
+            try
+            {
+                Thread.sleep(400);
+            }
+            catch(Exception e)
+            {
+                System.out.println(e.getMessage());
+            }
+      }
+   }
+}
+class mythread1 extends Thread
+{
+    sequence s;
+    int n;
+    mythread1(sequence s)
+    {
+        this.s=s;
+    }
+    public void run()
+    {
+        s.printsequence(1,40);
+   
+    }
+}
+class mythread2 extends Thread
+{
+    sequence s;
+    int n;
+   
+    mythread2(sequence s)
+    {
+        this.s=s;
+    }
+    public void run()
+    {
+         s.printsequence(41,80);
+     }
+}
+class mythread3 extends Thread
+{
+    sequence s;
+    int n;
+   
+    mythread3 (sequence s)
+    {
+        this.s=s;
+    }
+    public void run()
+    {
+       s.printsequence(81,100);
+     
+    }
+}
