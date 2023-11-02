@@ -1,0 +1,127 @@
+//1.
+package com.mycompany.linecounts1;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class LineCounts1 {
+    public static void main(String[] args) {
+        if (args.length == 0) {
+            System.out.println("Usage: java LineCounts <file1> <file2> <file3> ...");
+            return;
+        }
+
+        for (String filename : args) {
+            try {
+                int lineCount = countLines(filename);
+                System.out.println("File: " + filename + " - Line count: " + lineCount);
+            } catch (IOException e) {
+                System.err.println("Error reading file: " + filename);
+            }
+        }
+    }
+
+    public static int countLines(String filename) throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(filename));
+        int lineCount = 0;
+
+        while (reader.readLine() != null) {
+            lineCount++;
+        }
+
+        reader.close();
+        return lineCount;
+    }
+}
+
+//2.
+package com.mycompany.fileproperties;
+import java.io.File;
+import java.util.Scanner;
+
+public class FileProperties {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter the file name: ");
+        String fileName = scanner.nextLine();
+
+        File file = new File(fileName);
+
+        if (file.exists()) {
+            System.out.println("File is available.");
+            System.out.println("Readable: " + file.canRead());
+            System.out.println("Writable: " + file.canWrite());
+            System.out.println("File Type: " + getFileType(fileName));
+            System.out.println("File Length (in bytes): " + file.length());
+        } else {
+            System.out.println("File does not exist.");
+        }
+
+        scanner.close();
+    }
+
+    public static String getFileType(String fileName) {
+        int dotIndex = fileName.lastIndexOf(".");
+        if (dotIndex > 0) {
+            return fileName.substring(dotIndex + 1);
+        } else {
+            return "Unknown";
+        }
+    }
+}
+
+//3.
+package com.mycompany.filestreamexample;
+
+import java.io.*;
+
+public class FileStreamExample {
+    public static void main(String[] args) {
+        // Define the file paths for input and output
+        String inputFile = "binaryInput.dat";
+        String outputFile = "binaryOutput.dat";
+        
+        // Write binary data using Byte Streams
+        try (FileOutputStream fos = new FileOutputStream(inputFile)) {
+            // Writing binary data (bytes) to the file
+            fos.write(new byte[]{65, 66, 67, 68, 69});
+            System.out.println("Binary data has been written to " + inputFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Read binary data using Byte Streams
+        try (FileInputStream fis = new FileInputStream(inputFile)) {
+            int data;
+            System.out.println("Reading binary data from " + inputFile + ":");
+            while ((data = fis.read()) != -1) {
+                System.out.print(data + " ");
+            }
+            System.out.println();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Write character data using Character Streams
+        try (FileWriter writer = new FileWriter(outputFile)) {
+            writer.write("Hello, World!");
+            System.out.println("Character data has been written to " + outputFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Read character data using Character Streams
+        try (FileReader reader = new FileReader(outputFile)) {
+            int data;
+            System.out.println("Reading character data from " + outputFile + ":");
+            while ((data = reader.read()) != -1) {
+                System.out.print((char) data);
+            }
+            System.out.println();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
