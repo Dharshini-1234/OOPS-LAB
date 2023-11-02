@@ -105,7 +105,7 @@ public class FileStreamExample {
 
         // Write character data using Character Streams
         try (FileWriter writer = new FileWriter(outputFile)) {
-            writer.write("Hello, World!");
+            writer.write("Hi, everyone!");
             System.out.println("Character data has been written to " + outputFile);
         } catch (IOException e) {
             e.printStackTrace();
