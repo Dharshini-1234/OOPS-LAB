@@ -1,0 +1,133 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class MilesToKilometersConverter extends JFrame implements ActionListener {
+    private JTextField milesTextField;
+    private JLabel resultLabel;
+
+    public MilesToKilometersConverter() {
+        // Set up the JFrame
+        setTitle("Miles to Kilometers Converter");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new FlowLayout());
+
+        // Create components
+        JLabel milesLabel = new JLabel("Enter miles:");
+        milesTextField = new JTextField(10);
+        JButton convertButton = new JButton("Convert!");
+        resultLabel = new JLabel("");
+
+        // Add components to the JFrame
+        add(milesLabel);
+        add(milesTextField);
+        add(convertButton);
+        add(resultLabel);
+
+        // Add ActionListener to the Convert button
+        convertButton.addActionListener(this);
+
+        // Set the size of the JFrame
+        setSize(300, 150);
+
+        // Make the JFrame visible
+        setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        // Get the miles from the text field
+        String milesText = milesTextField.getText();
+
+        try {
+            // Convert miles to kilometers
+            double miles = Double.parseDouble(milesText);
+            double kilometers = miles * 1.609;
+
+            // Display the result
+            resultLabel.setText(String.format("%.2f miles is equal to %.2f kilometers.", miles, kilometers));
+        } catch (NumberFormatException ex) {
+            // Handle invalid input
+            resultLabel.setText("Please enter a valid number for miles.");
+        }
+    }
+
+    public static void main(String[] args) {
+        // Create an instance of the MilesToKilometersConverter class
+        SwingUtilities.invokeLater(() -> new MilesToKilometersConverter());
+    }
+}
+
+
+2.
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.*;
+
+public class ColorPaletteViewer extends JFrame {
+    private JSlider redSlider, greenSlider, blueSlider;
+    private JPanel colorPanel;
+
+    public ColorPaletteViewer() {
+        // Set up the JFrame
+        setTitle("Color Palette Viewer");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
+
+        // Create sliders with initial values set to 128
+        redSlider = createSlider(128);
+        greenSlider = createSlider(128);
+        blueSlider = createSlider(128);
+
+        // Create color panel
+        colorPanel = new JPanel();
+        colorPanel.setPreferredSize(new Dimension(300, 300));
+        updateColor();
+
+        // Add sliders and color panel to the JFrame
+        JPanel slidersPanel = new JPanel(new GridLayout(3, 1));
+        slidersPanel.add(redSlider);
+        slidersPanel.add(greenSlider);
+        slidersPanel.add(blueSlider);
+
+        add(slidersPanel, BorderLayout.WEST);
+        add(colorPanel, BorderLayout.CENTER);
+
+        // Set the size of the JFrame
+        pack();
+
+        // Make the JFrame visible
+        setVisible(true);
+    }
+
+    private JSlider createSlider(int initialValue) {
+        JSlider slider = new JSlider(JSlider.HORIZONTAL, 0, 255, initialValue);
+        slider.setMajorTickSpacing(50);
+        slider.setMinorTickSpacing(10);
+        slider.setPaintTicks(true);
+        slider.addChangeListener(new SliderChangeListener());
+        return slider;
+    }
+
+    private void updateColor() {
+        int red = redSlider.getValue();
+        int green = greenSlider.getValue();
+        int blue = blueSlider.getValue();
+
+        Color color = new Color(red, green, blue);
+        colorPanel.setBackground(color);
+    }
+
+    private class SliderChangeListener implements ChangeListener {
+        @Override
+        public void stateChanged(ChangeEvent e) {
+            updateColor();
+        }
+    }
+
+    public static void main(String[] args) {
+        // Create an instance of the ColorPaletteViewer class
+        SwingUtilities.invokeLater(ColorPaletteViewer::new);
+    }
